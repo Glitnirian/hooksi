@@ -1,4 +1,4 @@
-# Hooks
+# Hooksi (Hooks)
 Lightweight events hooking module
 
 Event hooking and construction Base! With multi callbacks support!
