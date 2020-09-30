@@ -1,5 +1,5 @@
 {
-  "name": "hooks",
+  "name": "hooksjs",
   "version": "1.0.0",
   "description": "Lightweight events hooking module",
   "main": "./dist/index.js",
