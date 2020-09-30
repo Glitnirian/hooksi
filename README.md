@@ -19,7 +19,7 @@ npm install hooksi --save
 import { Hooks } from 'hooksi';
 ```
 
-## Construction
+## Construction
 
 ```ts
 const hooks = new Hooks();
@@ -33,7 +33,7 @@ constructor() {
 }
 ```
 
-## Typescript definition for the hooks or events
+## Typescript definition for the hooks or events
 
 ```ts
 export interface IHooks<ResourceInfo extends IResourceInfo = any> {
@@ -58,7 +58,7 @@ class SomeClass {
 }
 ```
 
-## Events or hooks subscriptions and registering
+## Events or hooks subscriptions and registering
 
 ts
 
@@ -108,7 +108,7 @@ function anotherContext() {
 }
 ```
 
-## Hooking or Execution of an event or hook
+## Hooking or Execution of an event or hook
 
 ```ts
 this._hooks.exec('finished', this, {
@@ -130,7 +130,7 @@ public execAsync(
 ): void
 ```
 
-## Async executions
+## Async executions
 
 (support Async hooking and Async operation in the callback)
 
