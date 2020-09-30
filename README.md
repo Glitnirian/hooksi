@@ -8,10 +8,16 @@ Build and support Typescript!
 # Install
 
 ```sh
-npm install hooksjs --save
+npm install hooksi --save
 ```
 
 # Usage
+
+## Import
+
+```ts
+import { Hooks } from 'hooksi';
+```
 
 ## Construction
 
