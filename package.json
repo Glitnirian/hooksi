@@ -1,6 +1,6 @@
 {
   "name": "hooksi",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Lightweight events hooking module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -27,5 +27,13 @@
     "tslint": "^6.1.3",
     "typescript": "^3.9.7"
   },
-  "keywords": ["Hooks", "events", "typescript", "simple", "strong", "on", "lightweight"]
+  "keywords": [
+    "Hooks",
+    "events",
+    "typescript",
+    "simple",
+    "strong",
+    "on",
+    "lightweight"
+  ]
 }
