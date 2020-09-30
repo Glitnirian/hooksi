@@ -167,4 +167,8 @@ Using async await or return new Promise() are both nice ways.
 
 ## Unsubscribe from a hook or event
 
-Will be treated as a promise! That it return a promise or not! Promise.resolve() is used internally
+```ts
+this._hooks.Unsubscribe('eventName', callbackInstance);
+```
+
+Same logic as with a normal `addEventListener` and `removeEventListener`.
