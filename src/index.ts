@@ -2,6 +2,7 @@ type HooksObj = { [name in any]: Function[] };
 
 export class Hooks<HooksDefinition extends { [name: string]: any }> {
     private _hooks: HooksObj;
+
     constructor() {
         this._hooks = {};
     }
@@ -17,7 +18,7 @@ export class Hooks<HooksDefinition extends { [name: string]: any }> {
     public unsubscribe(
         hookName: keyof HooksDefinition,
         callback: HooksDefinition[typeof hookName]
-    ) {
+    ): void {
         if (this._hooks[hookName] && this._hooks[hookName].length > 0) {
             const callbackIndex = this._hooks[hookName].indexOf(callback);
 
@@ -32,7 +33,7 @@ export class Hooks<HooksDefinition extends { [name: string]: any }> {
         hookName: keyof HooksDefinition,
         _this: any,
         ...args: Parameters<HooksDefinition[typeof hookName]>
-    ) {
+    ): void {
         const hookCallbacks = this._hooks[hookName];
         if (hookCallbacks) {
             for (let i = 0; i < hookCallbacks.length; i++) {
@@ -45,7 +46,7 @@ export class Hooks<HooksDefinition extends { [name: string]: any }> {
         hookName: keyof HooksDefinition,
         _this: any,
         ...args: Parameters<HooksDefinition[typeof hookName]>
-    ) {
+    ): Promise<any>[] {
         const hookCallbacks = this._hooks[hookName];
         const promises: Promise<any>[] = [];
         if (hookCallbacks) {
