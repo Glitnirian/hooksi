@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Glitnirian/hooks.git"
+    "url": "git+https://github.com/Glitnirian/hooksi.git"
   },
   "author": "Glitnir",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Glitnirian/hooks/issues"
+    "url": "https://github.com/Glitnirian/hooksi/issues"
   },
-  "homepage": "https://github.com/Glitnirian/hooks#readme",
+  "homepage": "https://github.com/Glitnirian/hooksi#readme",
   "devDependencies": {
     "ts-node": "^8.10.2",
     "tslint": "^6.1.3",
