@@ -7,7 +7,10 @@ export class Hooks<HooksDefinition extends { [name: string]: any }> {
         this._hooks = {};
     }
 
-    public on(hookName: keyof HooksDefinition, callback: HooksDefinition[typeof hookName]) {
+    public on<HookName extends keyof HooksDefinition>(
+        hookName: HookName,
+        callback: HooksDefinition[HookName]
+    ) {
         if (!this._hooks[hookName]) {
             (this._hooks as any)[hookName] = [];
         }
@@ -15,9 +18,9 @@ export class Hooks<HooksDefinition extends { [name: string]: any }> {
         this._hooks[hookName].push(callback);
     }
 
-    public unsubscribe(
-        hookName: keyof HooksDefinition,
-        callback: HooksDefinition[typeof hookName]
+    public unsubscribe<HookName extends keyof HooksDefinition>(
+        hookName: HookName,
+        callback: HooksDefinition[HookName]
     ): void {
         if (this._hooks[hookName] && this._hooks[hookName].length > 0) {
             const callbackIndex = this._hooks[hookName].indexOf(callback);
@@ -29,10 +32,10 @@ export class Hooks<HooksDefinition extends { [name: string]: any }> {
         }
     }
 
-    public exec(
-        hookName: keyof HooksDefinition,
+    public exec<HookName extends keyof HooksDefinition>(
+        hookName: HookName,
         _this: any,
-        ...args: Parameters<HooksDefinition[typeof hookName]>
+        ...args: Parameters<HooksDefinition[HookName]>
     ): void {
         const hookCallbacks = this._hooks[hookName];
         if (hookCallbacks) {
@@ -42,10 +45,10 @@ export class Hooks<HooksDefinition extends { [name: string]: any }> {
         }
     }
 
-    public execAsync(
-        hookName: keyof HooksDefinition,
+    public execAsync<HookName extends keyof HooksDefinition>(
+        hookName: HookName,
         _this: any,
-        ...args: Parameters<HooksDefinition[typeof hookName]>
+        ...args: Parameters<HooksDefinition[HookName]>
     ): Promise<any>[] {
         const hookCallbacks = this._hooks[hookName];
         const promises: Promise<any>[] = [];
