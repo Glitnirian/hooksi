@@ -1,6 +1,6 @@
 {
   "name": "hooksi",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Lightweight events hooking module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
