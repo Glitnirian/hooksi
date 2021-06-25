@@ -1,25 +1,33 @@
 # Hooksi (Hooks)
 Lightweight events hooking module
 
-Event hooking and construction Base! With multi callbacks support!
+Event hooking and construction Base! With multi callbacks support! (Bind many callbacks to the same event)
 
-Build and support Typescript!
+Support of async execution and emitting too! Meaning The hook within the code or emitting! Can await for async callbacks to finish (Promises)! To move on to the next thing! Very handy in a lot of situations!  
 
-# Install
+Can be used as a lightweight event emitter! (`exec` calls are the emitters)
+
+And you subscribe with `on()`
+
+`hasSubscriber()` and `getHookCallbacks()` methods! To both check if there is hooks (subscribers)
+
+(Fully written in typescript)
+
+## Install
 
 ```sh
 npm install hooksi --save
 ```
 
-# Usage
+## Usage
 
-## Import
+### Import
 
 ```ts
 import { Hooks } from 'hooksi';
 ```
 
-## Construction
+### Construction
 
 ```ts
 const hooks = new Hooks();
@@ -33,7 +41,7 @@ constructor() {
 }
 ```
 
-## Typescript definition for the hooks or events
+### Typescript definition for the hooks or events
 
 ```ts
 export interface IHooks<ResourceInfo extends IResourceInfo = any> {
@@ -58,14 +66,16 @@ class SomeClass {
 }
 ```
 
-## Events or hooks subscriptions and registering
+With typescript type inference for callbacks and exec calls are well handled! And so autocompletion and intellisense in editors (like vscode).
+
+### Events or hooks subscriptions and registering
 
 ts
 
 ```ts
 // example of creating the on() method
-public on(name: keyof IHooksDef, callback: IHooksDef[typeof name]) {
-    this._hooks.on(name, callback);
+public on<EventName extends keyof IHookDef>(eventName: EventName, callback: IHooksDef[EventName]) {
+    this._hooks.on(eventName, callback);
     return this;
 }
 
@@ -108,7 +118,9 @@ function anotherContext() {
 }
 ```
 
-## Hooking or Execution of an event or hook
+### Hooking or Execution of an event or hook
+
+Synchronous Hook execution in code
 
 ```ts
 this._hooks.exec('finished', this, {
@@ -118,19 +130,34 @@ this._hooks.exec('finished', this, {
 
 // Within this all the attached and hooked callbacks will be executed
 
+
+// Can be chained too
+this._hooks.exec('finished', this, {
+    ...data,
+    executionTime
+})
+.exec('done', this, {
+    ...data,
+    executionTime
+});
+
 ```
 
 Signature go as
 
 ```ts
-public execAsync(
-    hookName: keyof HooksDefinition,
-    _this: any, // this context to bind within the callback
-    ...args: Parameters<HooksDefinition[typeof hookName]>
-): void
+public exec<HookName extends keyof HooksDefinition>(
+    hookName: HookName,
+    _this: any, // this context to bind within the subscribing callback
+    ...args: Parameters<HooksDefinition[HookName]>
+): this
 ```
 
-## Async executions
+That can be an event emitter too! And the `emit()` alias is provided too.
+
+### Async executions
+
+Asynchronous Hook execution in code
 
 (support Async hooking and Async operation in the callback)
 
@@ -157,18 +184,98 @@ for (const promise of promises) {
         // And we assured a good async flow 
     });
 }
+
+// or
+
+await Promise.all(
+    this._hooks.execAsync('onCandleProcessed', this, data)
+)
+
+// after hook subscribing callbacks execution ....
+
 ```
+
 To note that each hooked callback through `this._hooks.on()`
 
 Will be treated as a promise! That it returns a promise or not! Promise.resolve() is used internally!
 
-Using async await or return new Promise() are both nice ways.
+Using async await or return new Promise() are both nice ways. And of course any promise!
 
+### Emit aliases
 
-## Unsubscribe from a hook or event
+Synchronous
 
 ```ts
-this._hooks.Unsubscribe('eventName', callbackInstance);
+public emit<HookName extends keyof HooksDefinition>(
+    hookName: HookName,
+    _this: any,
+    ...args: Parameters<HooksDefinition[HookName]>
+): this
+```
+
+As `exec()` can be chained too!
+
+Asynchronous
+
+```ts
+public emitAsync<HookName extends keyof HooksDefinition>(
+    hookName: HookName,
+    _this: any,
+    ...args: Parameters<HooksDefinition[HookName]>
+): Promise<any>[]
+```
+
+A complete aliases for `exec()` and `execAsync()`. They can be preferred for readability when using the event emitter pattern!
+
+### Unsubscribe from a hook or event
+
+Unsubscribe a callback by it's ref.
+
+return true if callback was unsubscribed! False if it was not found (subscribed) (ref)!
+
+```ts
+const cbUnsubscribed = this._hooks.unsubscribe('eventName', callbackInstance);
 ```
 
 Same logic as with a normal `addEventListener` and `removeEventListener`.
+
+### Unsubscribe all
+
+Unsubscribe all callbacks from a hook (event)!
+
+return true if callbacks where unsubscribed! False if none were already subscribed!
+
+```ts
+const hadSubscriptions = this._hooks.unsubscribeAll('eventName');
+```
+
+### Check if a hook have Subscribers
+
+```ts
+if (this._hooks.hasSubscriber('eventName')) {
+    this._hooks.unsubscribe('eventName', this._onEventNameCallback);
+}
+```
+
+### Get hook callbacks list
+
+```ts
+const callbacks = this._hooks.getHookCallbacks('eventName');
+```
+
+### get hooks map
+
+Get the hook map!
+
+Signature
+
+```ts
+public getHooksMap(): THooksMap<HooksDefinition>
+
+type THooksMap<HooksDefinition> = Map<
+    keyof HooksDefinition,
+    HooksDefinition[keyof HooksDefinition][]
+>
+```
+
+Return the internal `Map` object! That map events (hook Names) to there callbacks lists!
