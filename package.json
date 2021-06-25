@@ -31,9 +31,12 @@
     "Hooks",
     "events",
     "typescript",
-    "simple",
-    "strong",
-    "on",
-    "lightweight"
+    "event_emitter",
+    "pub_sub",
+    "subscription",
+    "lightweight",
+    "async",
+    "exec",
+    "features_rich"
   ]
 }
