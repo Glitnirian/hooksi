@@ -1,18 +1,22 @@
 # Hooksi (Hooks)
 
-Lightweight events hooking module
+Lightweight events hooking module!
+
+Hooks, Pub sub, Event emitter! Event listener api!
+
+Smooth integration for any module! And use cases! Small, lightweight and rich to the point!
 
 Event hooking and construction Base! With multi callbacks support! (Bind many callbacks to the same event)
 
-Support of async execution and emitting too! Meaning The hook within the code or emitting! Can await for async callbacks to finish (Promises)! To move on to the next thing! Very handy in a lot of situations!  
+Support of async execution and emitting too (separate methodd -Async version-)! Meaning The hook execution within the code or emitting! Can await for async callbacks to finish (Promises)! To move on to the next thing! Very handy in a lot of situations!  
 
-Can be used as a lightweight event emitter! (`exec` calls are the emitters)
+Can be used as a lightweight event emitter! (`exec` calls are the emitters! `emit` aliases are provided too)
 
 And you subscribe with `on()`
 
-`hasSubscriber()` and `getHookCallbacks()` methods! To both check if there is hooks (subscribers)
+`hasSubscriber()` and `getHookCallbacks()` methods! To both check if there is hooks (subscribers)! And get the list of subscribing callbacks!
 
-(Fully written in typescript)
+(Fully written in typescript and support efficient types inference and autocompletion)
 
 ## Install
 
